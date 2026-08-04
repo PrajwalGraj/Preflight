@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "pull": "tsx pull_failed_txs.ts",
-    "verify": "tsx verify_data.ts"
+    "verify": "tsx verify_data.ts",
+    "backtest": "tsx backtest.ts"
   },
   "devDependencies": {
     "tsx": "^4.0.0",
