@@ -1,0 +1,8 @@
+target/
+.env
+.claude/
+node_modules/
+scripts/data/
+scripts/data/*.json
+dist/
+.DS_Store
