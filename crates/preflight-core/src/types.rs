@@ -27,6 +27,28 @@ pub struct SimulationResult {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DataFreshness {
-    pub last_update_ms: u64, 
-    pub is_stale: bool,     
+    pub last_update_ms: u64,
+    pub is_stale: bool,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub enum Action {
+    Send,    
+    Caution, 
+    Wait,   
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Recommendation {
+    pub action: Action,
+    pub recommended_priority_fee: u64,
+    pub reasons: Vec<String>,
+
+    pub contention: Vec<AccountContention>,
+
+    /// Result from the simulation engine
+    pub simulation: SimulationResult,
+    pub data_freshness: DataFreshness,
+
+    pub analyzed_at_slot: u64,
 }
