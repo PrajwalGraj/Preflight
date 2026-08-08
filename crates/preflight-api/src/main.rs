@@ -30,7 +30,6 @@ struct ProgramStatusEntry {
 
 #[derive(Serialize)]
 struct StatusResponse {
-    /// "healthy" | "moderate" | "congested"
     network: String,
     programs: Vec<ProgramStatusEntry>,
     data_freshness_ms: u64,
@@ -100,8 +99,8 @@ async fn main() -> anyhow::Result<()> {
     let app = build_router(state);
 
     let addr = format!("0.0.0.0:{port}");
-    tracing::info!("Preflight API listening on http://{addr}");
     let listener = tokio::net::TcpListener::bind(&addr).await?;
+    tracing::info!("Preflight API listening on http://{addr}");
     axum::serve(listener, app).await?;
 
     Ok(())

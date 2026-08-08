@@ -1,113 +1,207 @@
 @import "tailwindcss";
 
+@import "@fontsource/geist-sans/latin-400.css";
+@import "@fontsource/geist-sans/latin-500.css";
+@import "@fontsource/geist-sans/latin-600.css";
+@import "@fontsource/geist-sans/latin-700.css";
+@import "@fontsource/geist-sans/latin-800.css";
+@import "@fontsource/geist-sans/latin-900.css";
+@import "@fontsource/jetbrains-mono/latin-400.css";
+@import "@fontsource/jetbrains-mono/latin-500.css";
+@import "@fontsource/jetbrains-mono/latin-700.css";
+@import "@fontsource/jetbrains-mono/latin-800.css";
+
+@theme {
+  --font-sans: "Geist Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Geist Mono", "Fira Code", monospace;
+}
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --black: #000000;
+  --purple: #8f71d3;
+  --yellow: #fad848;
+  --white: #ffffff;
+  --grey-text: #999999;
+  --grey-border: #1a1a1a;
+  --grey-card: #111111;
+  --status-green: #22c55e;
+  --status-red: #ef4444;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+h2,
+h3 {
+  text-wrap: balance;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+::selection {
+  background-color: var(--purple);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--grey-border);
+  border-radius: 3px;
+}
+
+/* Monospace numbers */
+.mono {
+  font-family: var(--font-mono);
+}
+
+/*
+ * Subtle film-grain overlay for depth on black sections.
+ * Self-contained SVG turbulence — no external asset request.
+ */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/*
+ * Soft blend zones between differently-colored sections.
+ *
+ * A plain 2-stop linear-gradient has two separate problems here:
+ *   1. Its slope is constant right up to its last pixel, so where it
+ *      meets a flat solid-color section (slope = 0), that jump in
+ *      *rate of change* reads as a hard edge (a Mach band) even
+ *      though the colors match exactly at the seam.
+ *   2. Compressing the ramp with flat "dwell" stops fixes #1 but
+ *      concentrates the muddy olive/brown tones (unavoidable when
+ *      darkening a saturated color like yellow toward black) into a
+ *      shorter span — trading a hard edge for a visible dark stripe.
+ *
+ * The fix for both at once is an eased S-curve (smoothstep: 3t²-2t³)
+ * approximated with 9 color stops. Slope is ~0 at both ends (no Mach
+ * band) while the color still ramps across the full height (no
+ * concentrated mud band) — steepest in the middle, easing off at
+ * both edges.
+ */
+.fade-black-to-purple {
+  height: 280px;
+  background: linear-gradient(
+    to bottom,
+    #000000 0%,
+    #060509 12.5%,
+    #161221 25%,
+    #2d2443 37.5%,
+    #48396a 50%,
+    #624d90 62.5%,
+    #795fb2 75%,
+    #896cca 87.5%,
+    #8f71d3 100%
+  );
+}
+.fade-purple-to-black {
+  height: 280px;
+  background: linear-gradient(
+    to bottom,
+    #8f71d3 0%,
+    #896cca 12.5%,
+    #795fb2 25%,
+    #624d90 37.5%,
+    #48396a 50%,
+    #2d2443 62.5%,
+    #161221 75%,
+    #060509 87.5%,
+    #000000 100%
+  );
+}
+.fade-black-to-yellow {
+  height: 280px;
+  background: linear-gradient(
+    to bottom,
+    #000000 0%,
+    #0b0903 12.5%,
+    #27220b 25%,
+    #4f4417 37.5%,
+    #7d6c24 50%,
+    #ab9431 62.5%,
+    #d3b63d 75%,
+    #efcf45 87.5%,
+    #fad848 100%
+  );
+}
+.fade-yellow-to-black {
+  height: 280px;
+  background: linear-gradient(
+    to bottom,
+    #fad848 0%,
+    #efcf45 12.5%,
+    #d3b63d 25%,
+    #ab9431 37.5%,
+    #7d6c24 50%,
+    #4f4417 62.5%,
+    #27220b 75%,
+    #0b0903 87.5%,
+    #000000 100%
+  );
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
-p {
-  margin: 0;
+
+.page-fade-in {
+  animation: page-fade-in 360ms ease-out;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Global guard: kill CSS-driven motion for users who ask for it.
+   Framer Motion is handled separately via useReducedMotion(). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
