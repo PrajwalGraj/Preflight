@@ -45,36 +45,40 @@ export function CheckProgram() {
   }
 
   return (
-    <section className="py-20 max-w-6xl mx-auto px-6 bg-black">
+    <section className="bg-black rule-b">
+        <div className="max-w-7xl mx-auto rule-x">
       <Reveal>
-        <div className="rounded-2xl border border-[var(--grey-border)] bg-[var(--grey-card)] p-10">
-          <h2 className="text-2xl font-bold text-white mb-2">Check a Program</h2>
-          <p className="text-[var(--grey-text)] text-sm mb-6">
+        <div className="px-8 md:px-14 py-16">
+          <div className="eyebrow mb-5">
+            <span className="opacity-50">//</span> Lookup <span className="opacity-50">//</span>
+          </div>
+          <h2 className="display text-white text-2xl md:text-3xl mb-4">Check a program</h2>
+          <p className="text-[var(--grey-text)] text-sm mb-8 max-w-2xl">
             Enter any of the 8 monitored program names to get its live contention status.
-            <span className="ml-2 text-[var(--yellow)]">
-              (jupiter, pumpfun, raydium_amm, raydium_clmm, orca, marinade, tensor, magic_eden)
+            <span className="block mt-2 font-mono text-xs text-[var(--grey-text)] opacity-70">
+              jupiter · pumpfun · raydium_amm · raydium_clmm · orca · marinade · tensor · magic_eden
             </span>
           </p>
 
           {/* Input row */}
-          <div className="flex gap-3">
+          <div className="flex max-w-2xl">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="e.g. jupiter or pumpfun"
-              className="flex-1 px-4 py-3.5 rounded-lg bg-black border border-[var(--grey-border)] text-white placeholder-[var(--grey-text)] focus:outline-none focus:border-[var(--purple)] transition-colors duration-200 font-mono text-sm"
+              className="flex-1 px-4 py-3.5 bg-transparent border border-[var(--rule)] text-white placeholder-[var(--grey-text)] focus:outline-none focus:border-[var(--purple)] transition-colors duration-200 font-mono text-sm"
             />
             <motion.button
               onClick={handleCheck}
               disabled={loading || !input.trim()}
-              whileHover={reduced ? undefined : { scale: 1.02, filter: "brightness(1.1)" }}
-              whileTap={reduced ? undefined : { scale: 0.98 }}
+              whileHover={reduced ? undefined : { filter: "brightness(1.1)" }}
+              whileTap={reduced ? undefined : { scale: 0.99 }}
               transition={{ duration: 0.2, ease: EASE_OUT }}
-              className="px-6 py-3.5 rounded-lg font-bold text-sm bg-[var(--yellow)] text-black disabled:opacity-50 disabled:cursor-not-allowed min-w-[100px]"
+              className="px-7 py-3.5 font-semibold text-sm bg-[var(--yellow)] text-black disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              {loading ? "Checking..." : "Check →"}
+              {loading ? "Checking…" : "Check"}
             </motion.button>
           </div>
 
@@ -87,7 +91,7 @@ export function CheckProgram() {
                 animate={reduced ? undefined : { opacity: 1, scale: 1, y: 0 }}
                 exit={reduced ? undefined : { opacity: 0, scale: 0.97 }}
                 transition={POP_SPRING}
-                className="mt-6 p-5 rounded-lg bg-black border border-[var(--grey-border)] border-l-[3px] border-l-[var(--purple)]"
+                className="mt-8 p-6 max-w-2xl border border-[var(--rule)] border-l-2 border-l-[var(--purple)]"
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="font-mono text-sm text-white font-semibold">{result.program}</div>
@@ -121,7 +125,7 @@ export function CheckProgram() {
                 animate={reduced ? undefined : { opacity: 1, scale: 1, y: 0 }}
                 exit={reduced ? undefined : { opacity: 0, scale: 0.97 }}
                 transition={POP_SPRING}
-                className="mt-6 p-4 rounded-lg bg-black border border-[var(--grey-border)] border-l-[3px] border-l-[var(--status-red)] text-[var(--status-red)] text-sm"
+                className="mt-8 p-5 max-w-2xl border border-[var(--rule)] border-l-2 border-l-[var(--status-red)] text-[var(--status-red)] text-sm"
               >
                 {error}
               </motion.div>
@@ -129,6 +133,7 @@ export function CheckProgram() {
           </AnimatePresence>
         </div>
       </Reveal>
+        </div>
     </section>
   );
 }

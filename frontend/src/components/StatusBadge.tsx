@@ -30,11 +30,11 @@ export function StatusBadge({ action, size = "md" }: Props) {
     <motion.span
       animate={shouldPulse ? { opacity: [1, 0.72, 1] } : undefined}
       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      className={`inline-flex items-center gap-1.5 rounded-full font-bold uppercase tracking-wider ${sizeClass} ${styles[action]}`}
+      className={`inline-flex items-center gap-1.5 font-bold uppercase tracking-wider ${sizeClass} ${styles[action]}`}
     >
       {isWait && (
         <motion.span
-          className="w-1.5 h-1.5 rounded-full bg-white"
+          className="w-1.5 h-1.5 bg-white"
           animate={shouldPulse ? { scale: [1, 1.4, 1] } : undefined}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />

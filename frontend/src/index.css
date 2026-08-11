@@ -75,6 +75,64 @@ h3 {
   font-family: var(--font-mono);
 }
 
+/* ==========================================================================
+   Structural design system
+   --------------------------------------------------------------------------
+   A technical, drafting-table language: monospace display type, hairline
+   rules that run edge-to-edge, square corners, and one accent at a time.
+   Depth comes from structure (lines, cells, alignment) rather than from
+   shadows, blurs or gradients.
+   ========================================================================== */
+
+/* Display headings — monospace, tight, square. */
+.display {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+/* Section eyebrow: // Label // */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+/* Hairline tokens — one shared value so every rule on the page matches. */
+:root {
+  --rule: rgba(255, 255, 255, 0.14);
+}
+
+.rule-t {
+  border-top: 1px solid var(--rule);
+}
+.rule-b {
+  border-bottom: 1px solid var(--rule);
+}
+.rule-x {
+  border-left: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+/* Accent hairline used to separate major chapters of the page. */
+.rule-accent {
+  height: 1px;
+  background: var(--purple);
+  opacity: 0.55;
+}
+
+/* Small square tick — the recurring accent mark. */
+.tick {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--purple);
+}
+
 /*
  * Subtle film-grain overlay for depth on black sections.
  * Self-contained SVG turbulence — no external asset request.
@@ -167,6 +225,12 @@ h3 {
     #0b0903 87.5%,
     #000000 100%
   );
+}
+
+/* Faint dot texture — used inside minimal flow-diagram blocks. */
+.dot-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+  background-size: 14px 14px;
 }
 
 @keyframes marquee-left {

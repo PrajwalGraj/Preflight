@@ -33,7 +33,7 @@ export function SignatureMarquee() {
   const renderRows = (textClassName: string) => (
     <div className={`absolute inset-0 flex flex-col justify-center gap-y-2 ${textClassName}`}>
       {rows.map((row, i) => (
-        <div key={i} className="overflow-hidden whitespace-nowrap">
+        <div key={i} className="overflow-hidden whitespace-nowrap shrink-0">
           <div
             className="inline-flex gap-x-10 font-mono text-sm"
             style={{

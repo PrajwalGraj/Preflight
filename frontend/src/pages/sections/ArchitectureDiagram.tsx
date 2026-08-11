@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { Reveal } from "../../components/Reveal";
+import { SectionHeading } from "../../components/SectionHeading";
 import { EASE_OUT, VIEWPORT } from "../../lib/motion";
 
 /** Vertical connector whose line draws downward as it enters view. */
@@ -73,19 +73,19 @@ export function ArchitectureDiagram() {
   ];
 
   return (
-    <section className="py-32 bg-[var(--grey-card)] w-full">
-      <div className="max-w-6xl mx-auto px-6">
-        <Reveal className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-[-0.03em]">
-            Architecture
-          </h2>
-          <p className="text-[var(--grey-text)]">Open source. Rust backend. React frontend.</p>
-        </Reveal>
+    <section className="bg-black rule-b">
+        <div className="max-w-7xl mx-auto rule-x px-8 md:px-14 py-20">
+        <SectionHeading
+          className="mb-16"
+          label="Architecture"
+          title="Open source, end to end"
+          subtitle="Rust backend. React frontend. Every decision traceable to an explicit rule."
+        />
 
-        <div className="rounded-2xl border border-[var(--grey-border)] bg-black p-10">
+        <div className="border border-[var(--rule)] p-10">
           {/* Data source */}
           <Node delay={0} className="flex justify-center mb-6">
-            <div className="px-6 py-3 rounded-lg bg-black border border-[var(--yellow)] text-[var(--yellow)] font-semibold text-sm text-center">
+            <div className="px-6 py-3 bg-black border border-[var(--yellow)] text-[var(--yellow)] font-semibold text-sm text-center">
               Helius WebSocket
               <div className="text-[var(--grey-text)] text-xs font-normal mt-0.5">
                 8 programs · live account updates
@@ -101,7 +101,7 @@ export function ArchitectureDiagram() {
               <Node
                 key={engine.name}
                 delay={0.6 + i * 0.1}
-                className="rounded-lg p-4 text-center bg-black border border-[var(--purple)]"
+                className="p-4 text-center bg-black border border-[var(--purple)]"
               >
                 <div className="font-semibold text-white text-sm mb-1">{engine.name}</div>
                 <div className="text-[var(--grey-text)] text-xs">{engine.detail}</div>
@@ -113,7 +113,7 @@ export function ArchitectureDiagram() {
 
           {/* Recommendation Engine — filled purple */}
           <Node delay={1.25} className="flex justify-center mb-6">
-            <div className="px-8 py-4 rounded-lg text-center bg-[var(--purple)] w-72">
+            <div className="px-8 py-4 text-center bg-[var(--purple)] w-72">
               <div className="font-bold text-white mb-1">Recommendation Engine</div>
               <div className="text-white/80 text-xs">
                 decide() — pure function, explicit rules, no ML
@@ -129,7 +129,7 @@ export function ArchitectureDiagram() {
               <Node
                 key={output.name}
                 delay={1.8 + i * 0.1}
-                className="rounded-lg p-4 text-center bg-black border border-[var(--grey-border)]"
+                className="p-4 text-center bg-black border border-[var(--rule)]"
               >
                 <div className="text-2xl mb-2">{output.icon}</div>
                 <div className="font-semibold text-white text-sm mb-1">{output.name}</div>
@@ -138,7 +138,7 @@ export function ArchitectureDiagram() {
             ))}
           </div>
         </div>
-      </div>
+        </div>
     </section>
   );
 }

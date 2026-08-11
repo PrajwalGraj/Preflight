@@ -35,21 +35,21 @@ export function Navbar() {
       transition={{ duration: 0.35, ease: EASE_OUT }}
       className="fixed top-0 left-0 right-0 z-50 border-b"
     >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-8 md:px-14 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-2.5 group">
           <motion.div
             whileHover={reduced ? undefined : { scale: 1.08, rotate: -4 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
-            className="w-8 h-8 bg-black border border-[var(--yellow)] flex items-center justify-center"
+            className="w-7 h-7 bg-[var(--yellow)] flex items-center justify-center"
           >
-            <span className="text-[var(--yellow)] font-bold text-sm">P</span>
+            <span className="text-black font-bold text-xs">P</span>
           </motion.div>
-          <span className="font-bold text-lg tracking-tight text-white">Preflight</span>
+          <span className="display text-base text-white">Preflight</span>
         </Link>
 
         {/* Nav links */}
-        <div className="hidden md:flex items-center gap-6 text-white text-sm">
+        <div className="hidden md:flex items-center gap-8 text-sm text-[var(--grey-text)]">
           {[
             { href: "/#signal", label: "Signal" },
             { href: "/#actions", label: "Actions" },
@@ -58,15 +58,12 @@ export function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="relative hover:text-[var(--yellow)] transition-colors duration-200 after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-[var(--yellow)] after:transition-all after:duration-300 hover:after:w-full"
+              className="hover:text-white transition-colors duration-200"
             >
               {link.label}
             </a>
           ))}
-          <Link
-            to="/docs"
-            className="relative hover:text-[var(--yellow)] transition-colors duration-200 after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-[var(--yellow)] after:transition-all after:duration-300 hover:after:w-full"
-          >
+          <Link to="/docs" className="hover:text-white transition-colors duration-200">
             Docs
           </Link>
         </div>
@@ -79,7 +76,7 @@ export function Navbar() {
           whileHover={reduced ? undefined : { scale: 1.02, filter: "brightness(1.1)" }}
           whileTap={reduced ? undefined : { scale: 0.98 }}
           transition={{ duration: 0.2, ease: EASE_OUT }}
-          className="flex items-center gap-2 px-4 py-2 rounded-sm text-sm font-bold bg-[var(--yellow)] text-black"
+          className="flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-[var(--yellow)] text-black"
         >
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
             <path

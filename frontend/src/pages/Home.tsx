@@ -2,6 +2,7 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { ScrollProgress } from "../components/ScrollProgress";
 import { Hero } from "./sections/Hero";
+import { TransactionFlow } from "./sections/TransactionFlow";
 import { StatsBanner } from "./sections/StatsBanner";
 import { PreflightSignal } from "./sections/PreflightSignal";
 import { PopularActions } from "./sections/PopularActions";
@@ -10,6 +11,7 @@ import { HowItWorks } from "./sections/HowItWorks";
 import { WhyPreflight } from "./sections/WhyPreflight";
 import { DeveloperSection } from "./sections/DeveloperSection";
 import { ArchitectureDiagram } from "./sections/ArchitectureDiagram";
+import { NetworkPulse } from "./sections/NetworkPulse";
 
 export function Home() {
   return (
@@ -18,19 +20,21 @@ export function Home() {
       <Navbar />
       <main>
         <Hero />
+        <TransactionFlow />
         <StatsBanner />
         <PreflightSignal />
         <PopularActions />
         <CheckProgram />
         <HowItWorks />
 
-        {/* Soft blend into the full-bleed yellow section instead of a hard cut */}
-        <div className="fade-black-to-yellow" aria-hidden />
+        {/* Hard accent rule marks the chapter break into the inverted section */}
+        <div className="rule-accent" aria-hidden />
         <WhyPreflight />
-        <div className="fade-yellow-to-black" aria-hidden />
+        <div className="rule-accent" aria-hidden />
 
         <DeveloperSection />
         <ArchitectureDiagram />
+        <NetworkPulse />
       </main>
       <Footer />
     </div>
