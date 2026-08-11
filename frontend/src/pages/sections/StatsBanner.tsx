@@ -3,42 +3,57 @@ import { AnimatedCounter } from "../../components/AnimatedCounter";
 import { fadeUpChild, staggerContainer, VIEWPORT } from "../../lib/motion";
 
 const STATS = [
-  { value: 58, suffix: "%", label: "bot transaction failure rate" },
-  { value: 78, suffix: "%", label: "failures are contention-type" },
-  { value: 635, suffix: "", label: "SOL lost in fees, one program, one month" },
+  { value: 58, suffix: "%", label: "Bot transaction failure rate" },
+  { value: 78, suffix: "%", label: "Failures that are contention-type" },
+  { value: 635, suffix: " SOL", label: "Lost to fees — one program, one month" },
 ];
+
+/** L-bracket accents pinned to opposite corners of a cell. */
+function Brackets() {
+  return (
+    <>
+      <span
+        aria-hidden
+        className="absolute top-0 left-0 w-3.5 h-3.5 border-t border-l border-[var(--purple)]"
+      />
+      <span
+        aria-hidden
+        className="absolute bottom-0 right-0 w-3.5 h-3.5 border-b border-r border-[var(--purple)]"
+      />
+    </>
+  );
+}
 
 export function StatsBanner() {
   const reduced = useReducedMotion();
-  const container = staggerContainer(0.12);
-  const child = fadeUpChild(16);
 
   return (
-    <section className="bg-black px-6 md:px-10 py-6">
-      <div className="rounded-[2.5rem] bg-[var(--yellow)] px-8 md:px-16 py-16 md:py-20">
+    <section className="bg-black rule-b">
         <motion.div
-          className="flex flex-col sm:flex-row sm:justify-between gap-10 sm:gap-6"
-          variants={reduced ? undefined : container}
+          className="max-w-7xl mx-auto rule-x grid grid-cols-1 sm:grid-cols-3"
+          variants={reduced ? undefined : staggerContainer(0.12)}
           initial={reduced ? undefined : "hidden"}
           whileInView={reduced ? undefined : "show"}
           viewport={VIEWPORT}
         >
-          {STATS.map((stat) => (
+          {STATS.map((stat, i) => (
             <motion.div
               key={stat.label}
-              variants={reduced ? undefined : child}
-              className="text-center flex-1"
+              variants={reduced ? undefined : fadeUpChild(14)}
+              className={`relative px-8 md:px-12 py-14 ${
+                i > 0 ? "border-t sm:border-t-0 sm:border-l border-[var(--rule)]" : ""
+              }`}
             >
-              <div className="text-5xl md:text-7xl font-extrabold text-black mono tracking-[-0.03em]">
+              <Brackets />
+              <div className="display text-white text-4xl md:text-5xl mb-4">
                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="text-xs md:text-sm text-black/70 mt-3 uppercase tracking-widest leading-snug">
+              <div className="text-sm text-[var(--grey-text)] leading-snug max-w-[22ch]">
                 {stat.label}
               </div>
             </motion.div>
           ))}
         </motion.div>
-      </div>
     </section>
   );
 }

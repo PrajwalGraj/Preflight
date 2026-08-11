@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { ProgramResponse, LevelType, ActionType } from "../../api/client";
 import { fetchProgram } from "../../api/client";
 import { StatusBadge } from "../../components/StatusBadge";
-import { Reveal } from "../../components/Reveal";
+import { SectionHeading } from "../../components/SectionHeading";
 import { EASE_OUT, fadeUpChild, staggerContainer, VIEWPORT } from "../../lib/motion";
 import { PROGRAM_ADDRESSES, LOGO_PATH, shortenAddress } from "../../lib/programs";
 
@@ -54,21 +54,11 @@ function ActionCard({ name, label, desc }: { name: string; label: string; desc: 
     <motion.a
       href={`/status/${name}`}
       variants={reduced ? undefined : fadeUpChild(14)}
-      whileHover={
-        reduced
-          ? undefined
-          : { y: -4, boxShadow: "0 12px 40px rgba(143,113,211,0.28)", borderColor: "#8f71d3" }
-      }
-      transition={{ duration: 0.25, ease: EASE_OUT }}
-      style={{ borderLeftColor: accent, borderLeftWidth: "3px" }}
-      className="relative block overflow-hidden rounded-xl p-5 pb-16 bg-[var(--grey-card)] border border-[var(--grey-border)] cursor-pointer"
+      whileHover={reduced ? undefined : { backgroundColor: "rgba(255,255,255,0.03)" }}
+      transition={{ duration: 0.2, ease: EASE_OUT }}
+      style={{ borderLeftColor: accent, borderLeftWidth: "2px" }}
+      className="relative block overflow-hidden p-6 pb-16 border-t border-r border-b border-[var(--rule)] cursor-pointer"
     >
-      {/* Soft accent glow tinting the corner — matches current status */}
-      <div
-        aria-hidden
-        className="absolute -top-10 -right-10 w-28 h-28 rounded-full blur-2xl pointer-events-none opacity-20"
-        style={{ backgroundColor: accent }}
-      />
 
       {/* Program name + description */}
       <div className="relative mb-4">
@@ -113,27 +103,28 @@ export function PopularActions() {
   const reduced = useReducedMotion();
 
   return (
-    <section id="actions" className="relative grain py-32 max-w-6xl mx-auto px-6 bg-black">
-      <Reveal className="mb-10 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-3 tracking-[-0.03em]">
-          Top Actions
-        </h2>
-        <p className="text-[var(--grey-text)]">
-          Live execution conditions for the most common Solana actions. Updates every 10 seconds.
-        </p>
-      </Reveal>
+    <section id="actions" className="relative bg-black rule-b">
+        <div className="max-w-7xl mx-auto rule-x">
+          <div className="px-8 md:px-14 pt-20 pb-12">
+            <SectionHeading
+              label="Top Actions"
+              title="Live execution conditions"
+              subtitle="The most common Solana actions, measured continuously. Updates every 10 seconds."
+            />
+          </div>
 
-      <motion.div
-        className="relative z-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4"
-        variants={reduced ? undefined : staggerContainer(0.05)}
-        initial={reduced ? undefined : "hidden"}
-        whileInView={reduced ? undefined : "show"}
-        viewport={VIEWPORT}
-      >
-        {ACTIONS.map((action) => (
-          <ActionCard key={action.name} {...action} />
-        ))}
-      </motion.div>
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-l border-[var(--rule)]"
+            variants={reduced ? undefined : staggerContainer(0.05)}
+            initial={reduced ? undefined : "hidden"}
+            whileInView={reduced ? undefined : "show"}
+            viewport={VIEWPORT}
+          >
+            {ACTIONS.map((action) => (
+              <ActionCard key={action.name} {...action} />
+            ))}
+          </motion.div>
+        </div>
     </section>
   );
 }

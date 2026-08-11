@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { motion, useReducedMotion } from "framer-motion";
 import { fetchStatus } from "../../api/client";
 import { Reveal } from "../../components/Reveal";
+import { SectionHeading } from "../../components/SectionHeading";
 import { EASE_OUT } from "../../lib/motion";
 
 const ENDPOINTS = [
@@ -76,16 +77,14 @@ export function DeveloperSection() {
     : '{ "loading": true }';
 
   return (
-    <section id="developer" className="relative grain py-32 max-w-6xl mx-auto px-6 bg-black">
-      <Reveal className="text-center mb-16 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-[-0.03em]">
-          For Developers
-        </h2>
-        <p className="text-[var(--grey-text)] max-w-xl mx-auto">
-          REST API and TypeScript SDK. No authentication required. Open source,
-          self-hostable.
-        </p>
-      </Reveal>
+    <section id="developer" className="relative bg-black rule-b">
+        <div className="max-w-7xl mx-auto rule-x px-8 md:px-14 py-20">
+      <SectionHeading
+        className="mb-16"
+        label="For Developers"
+        title="One call, one answer"
+        subtitle="REST API and TypeScript SDK. No authentication required. Open source, self-hostable."
+      />
 
       {/* Two columns */}
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
@@ -96,10 +95,10 @@ export function DeveloperSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: EASE_OUT }}
           whileHover={reduced ? undefined : { y: -4, borderColor: "#8f71d3" }}
-          className="group rounded-xl p-7 bg-[var(--grey-card)] border border-[var(--grey-border)]"
+          className="group p-7 border border-[var(--rule)]"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-black border border-[var(--grey-border)] flex items-center justify-center text-lg group-hover:border-[var(--purple)] transition-colors duration-200">
+            <div className="w-9 h-9 bg-black border border-[var(--rule)] flex items-center justify-center text-lg group-hover:border-[var(--purple)] transition-colors duration-200">
               ⚡
             </div>
             <div className="text-white font-semibold text-sm">REST API</div>
@@ -109,10 +108,10 @@ export function DeveloperSection() {
             {ENDPOINTS.map((ep) => (
               <div
                 key={ep.path}
-                className="flex items-center gap-3 rounded-lg bg-black px-3 py-2 border border-[var(--grey-border)]"
+                className="flex items-center gap-3 bg-black px-3 py-2 border border-[var(--rule)]"
               >
                 <span
-                  className={`shrink-0 px-2 py-0.5 rounded text-[10px] font-bold font-mono border ${METHOD_COLORS[ep.method]}`}
+                  className={`shrink-0 px-2 py-0.5 text-[10px] font-bold font-mono border ${METHOD_COLORS[ep.method]}`}
                 >
                   {ep.method}
                 </span>
@@ -136,16 +135,16 @@ export function DeveloperSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT }}
           whileHover={reduced ? undefined : { y: -4, borderColor: "#8f71d3" }}
-          className="group rounded-xl p-7 bg-[var(--grey-card)] border border-[var(--grey-border)]"
+          className="group p-7 border border-[var(--rule)]"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-black border border-[var(--grey-border)] flex items-center justify-center text-lg group-hover:border-[var(--purple)] transition-colors duration-200">
+            <div className="w-9 h-9 bg-black border border-[var(--rule)] flex items-center justify-center text-lg group-hover:border-[var(--purple)] transition-colors duration-200">
               📦
             </div>
             <div className="text-white font-semibold text-sm">TypeScript SDK</div>
           </div>
 
-          <div className="rounded-lg bg-black border border-[var(--grey-border)] overflow-hidden">
+          <div className="bg-black border border-[var(--rule)] overflow-hidden">
             <div className="px-4 py-2 border-b border-[var(--grey-border)] text-[10px] uppercase tracking-widest text-[var(--grey-text)]">
               install
             </div>
@@ -154,7 +153,7 @@ export function DeveloperSection() {
             </div>
           </div>
 
-          <div className="mt-3 rounded-lg bg-black border border-[var(--grey-border)] p-4 font-mono text-xs leading-relaxed">
+          <div className="mt-3 bg-black border border-[var(--rule)] p-4 font-mono text-xs leading-relaxed">
             <div>
               <span className="text-[var(--purple)]">import</span>
               <span className="text-white"> {"{ Preflight }"} </span>
@@ -176,16 +175,16 @@ export function DeveloperSection() {
       </div>
 
       {/* Live API example */}
-      <Reveal className="relative z-10 rounded-xl overflow-hidden border border-[var(--grey-border)] bg-[var(--grey-card)]">
+      <Reveal className="relative z-10 overflow-hidden border border-[var(--rule)]">
         <div className="px-5 py-3 border-b border-[var(--grey-border)] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono border text-[var(--status-green)] border-[var(--status-green)]/30 bg-[var(--status-green)]/10">
+            <span className="px-2 py-0.5 text-[10px] font-bold font-mono border text-[var(--status-green)] border-[var(--status-green)]/30 bg-[var(--status-green)]/10">
               GET
             </span>
             <span className="font-mono text-sm text-white">/v1/status</span>
           </div>
           <div className="text-xs text-[var(--status-green)] flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--status-green)] animate-pulse" />
+            <span className="w-1.5 h-1.5 bg-[var(--status-green)] animate-pulse" />
             live
           </div>
         </div>
@@ -193,6 +192,7 @@ export function DeveloperSection() {
           <pre className="text-[var(--grey-text)]">{highlightJson(liveJson)}</pre>
         </div>
       </Reveal>
+        </div>
     </section>
   );
 }

@@ -34,9 +34,11 @@ export function WhyPreflight() {
           whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
           viewport={VIEWPORT}
           transition={{ duration: 0.6, ease: EASE_OUT }}
-          className="text-black/70 text-[11px] font-semibold uppercase tracking-[0.2em] mb-10"
+          className="eyebrow mb-10"
+          style={{ color: "rgba(0,0,0,0.6)" }}
         >
-          Why Preflight Exists
+          <span className="opacity-50">//</span> Why Preflight exists{" "}
+          <span className="opacity-50">//</span>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -47,10 +49,8 @@ export function WhyPreflight() {
             viewport={VIEWPORT}
             transition={{ duration: 0.7, ease: EASE_OUT }}
           >
-            <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-2 tracking-[-0.03em]">
-              Users send blind.
-            </h2>
-            <h2 className="text-4xl md:text-5xl font-medium text-black/70 mb-8 tracking-[-0.03em]">
+            <h2 className="display text-4xl md:text-5xl text-black mb-2">Users send blind.</h2>
+            <h2 className="display text-4xl md:text-5xl text-black/60 mb-8">
               Preflight fixes that.
             </h2>
             <div className="space-y-4 text-black/80 leading-relaxed">
@@ -79,9 +79,9 @@ export function WhyPreflight() {
                 viewport={VIEWPORT}
                 transition={{ duration: 0.6, delay: i * 0.12, ease: EASE_OUT }}
                 whileHover={reduced ? undefined : { y: -4 }}
-                className={`rounded-2xl p-8 bg-black ${i === 1 ? "lg:ml-10" : ""}`}
+                className={`p-8 bg-black ${i === 1 ? "lg:ml-10" : ""}`}
               >
-                <div className="text-[5rem] md:text-[5.5rem] leading-[0.85] font-extrabold text-[var(--yellow)] mono tracking-[-0.05em] mb-4">
+                <div className="display text-[5rem] md:text-[5.5rem] leading-[0.85] text-[var(--yellow)] mb-4">
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </div>
                 <div className="text-white font-medium mb-1">{stat.label}</div>
