@@ -1,19 +1,30 @@
+mod chat;
+mod lana;
+mod rate_limit;
+
+use std::net::SocketAddr;
 use std::sync::Arc;
 
 use axum::extract::{Path, State};
 use axum::http::StatusCode;
 use axum::routing::{get, post};
 use axum::{Json, Router};
+use lana::LanaClient;
 use preflight_core::{
     ContentionEngine, ContentionLevel, Recommendation, RecommendationEngine, SimulationEngine,
 };
+use rate_limit::RateLimiter;
 use serde::{Deserialize, Serialize};
 use tower_http::cors::{Any, CorsLayer};
 
 #[derive(Clone)]
-struct AppState {
+pub struct AppState {
     engine: Arc<RecommendationEngine>,
     contention: Arc<ContentionEngine>,
+    /// None when LANA_KEY is unset — the chat route then returns a clear
+    /// "not configured" instead of the server refusing to boot.
+    lana: Option<LanaClient>,
+    rate_limiter: Arc<RateLimiter>,
 }
 
 
@@ -67,6 +78,21 @@ async fn main() -> anyhow::Result<()> {
     let ws_url = std::env::var("HELIUS_WS_URL").expect("HELIUS_WS_URL must be set in .env");
     let port = std::env::var("PORT").unwrap_or_else(|_| "3000".to_string());
 
+    // Lana is optional: without a key the rest of the API still works and only
+    // /v1/chat degrades, which beats refusing to start the whole service.
+    let lana_host = std::env::var("LANA_HOST")
+        .unwrap_or_else(|_| "https://lana-api.helius-experiments.com".to_string());
+    let lana = match std::env::var("LANA_KEY") {
+        Ok(key) if !key.trim().is_empty() && !key.contains("REPLACE_ME") => {
+            tracing::info!("Lana client configured — host {lana_host}");
+            Some(LanaClient::new(lana_host, key))
+        }
+        _ => {
+            tracing::warn!("LANA_KEY not set — /v1/chat will report as unconfigured");
+            None
+        }
+    };
+
     tracing::info!("Starting ContentionEngine...");
     let contention = Arc::new(ContentionEngine::new(ws_url));
     contention.start().await?;
@@ -95,13 +121,23 @@ async fn main() -> anyhow::Result<()> {
     }
     tracing::info!("Background cleanup task spawned");
 
-    let state = AppState { engine, contention };
+    let state = AppState {
+        engine,
+        contention,
+        lana,
+        rate_limiter: Arc::new(RateLimiter::new()),
+    };
     let app = build_router(state);
 
     let addr = format!("0.0.0.0:{port}");
     let listener = tokio::net::TcpListener::bind(&addr).await?;
     tracing::info!("Preflight API listening on http://{addr}");
-    axum::serve(listener, app).await?;
+    // ConnectInfo is required so the chat rate limiter can see the peer IP.
+    axum::serve(
+        listener,
+        app.into_make_service_with_connect_info::<SocketAddr>(),
+    )
+    .await?;
 
     Ok(())
 }
@@ -112,6 +148,7 @@ fn build_router(state: AppState) -> Router {
         .route("/v1/analyze", post(analyze_handler))
         .route("/v1/status", get(status_handler))
         .route("/v1/program/{name}", get(program_handler))
+        .route("/v1/chat", post(chat::chat_handler))
         .layer(
             CorsLayer::new()
                 .allow_origin(Any)

@@ -38,6 +38,35 @@ pub enum Action {
     Wait,   
 }
 
+/// One historically-failed transaction from a wallet, classified by the
+/// same error-string rules the backtest uses.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct WalletFailure {
+    pub signature: String,
+    pub slot: u64,
+    /// Raw error string from the transaction meta, as reported by the RPC.
+    pub error: String,
+    /// What Preflight would have advised, had it been consulted.
+    pub action: Action,
+    pub reason: String,
+    /// True when the error is a contention-driven race (slippage, curve
+    /// completion) — the class of failure Preflight is designed to prevent.
+    pub is_contention_error: bool,
+    /// Fee actually paid, in lamports.
+    pub fee: u64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct WalletDiagnosis {
+    pub wallet: String,
+    /// Total signatures inspected (both successful and failed).
+    pub transactions_scanned: usize,
+    pub failures: Vec<WalletFailure>,
+    pub contention_failures: usize,
+    /// Total lamports paid for transactions that failed.
+    pub lamports_wasted: u64,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Recommendation {
     pub action: Action,

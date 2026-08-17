@@ -2331,6 +2331,7 @@ dependencies = [
  "chrono",
  "dotenvy",
  "preflight-core",
+ "reqwest",
  "serde",
  "serde_json",
  "tokio",
