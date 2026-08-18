@@ -70,6 +70,39 @@ export async function analyzeTransaction(transaction: string): Promise<Recommend
   return res.data;
 }
 
+export type ChatMode = "homepage" | "wallet";
+
+export interface ChatResponse {
+  reply: string;
+}
+
+/**
+ * Ask Preflight's assistant. All Lana traffic goes through our own backend —
+ * the API key never reaches the browser.
+ *
+ * The server answers with a user-safe `reply` string even on failure, so
+ * error bodies are surfaced as-is rather than replaced with a generic message.
+ */
+export async function sendChat(
+  message: string,
+  mode: ChatMode,
+  wallet?: string,
+): Promise<string> {
+  try {
+    const res = await axios.post<ChatResponse>(`${API_BASE}/v1/chat`, {
+      message,
+      mode,
+      ...(wallet ? { wallet } : {}),
+    });
+    return res.data.reply;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response?.data?.reply) {
+      return err.response.data.reply as string;
+    }
+    return "Preflight's assistant is unreachable right now. Make sure the API server is running and try again.";
+  }
+}
+
 export async function checkHealth(): Promise<boolean> {
   try {
     await axios.get(`${API_BASE}/health`);

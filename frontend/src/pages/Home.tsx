@@ -12,6 +12,7 @@ import { WhyPreflight } from "./sections/WhyPreflight";
 import { DeveloperSection } from "./sections/DeveloperSection";
 import { ArchitectureDiagram } from "./sections/ArchitectureDiagram";
 import { NetworkPulse } from "./sections/NetworkPulse";
+import { AskPreflight } from "../components/AskPreflight";
 
 export function Home() {
   return (
@@ -23,6 +24,7 @@ export function Home() {
         <TransactionFlow />
         <StatsBanner />
         <PreflightSignal />
+        <AskPreflight />
         <PopularActions />
         <CheckProgram />
         <HowItWorks />

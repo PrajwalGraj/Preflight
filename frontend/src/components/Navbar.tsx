@@ -63,6 +63,9 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
+          <Link to="/diagnose" className="hover:text-white transition-colors duration-200">
+            Diagnose
+          </Link>
           <Link to="/docs" className="hover:text-white transition-colors duration-200">
             Docs
           </Link>

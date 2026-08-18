@@ -95,7 +95,7 @@ export function TransactionFlow() {
                 <div key={step.label} className="flex items-center">
                   <div className="flex flex-col items-center">
                     <motion.div
-                      className="dot-pattern w-40 h-24 md:w-48 md:h-28"
+                      className="dot-pattern w-40 h-24 md:w-48 md:h-28 rounded-xl"
                       animate={{
                         borderColor: isActive ? step.border : IDLE_BORDER,
                         backgroundColor: isActive ? step.bg : IDLE_BG,
