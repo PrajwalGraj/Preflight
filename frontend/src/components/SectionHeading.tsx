@@ -7,6 +7,8 @@ interface Props {
   title: ReactNode;
   subtitle?: ReactNode;
   className?: string;
+  /** Center the eyebrow, title and subtitle. Off by default (see below). */
+  center?: boolean;
 }
 
 /**
@@ -15,15 +17,27 @@ interface Props {
  * default — consistent alignment across sections is what makes the page read
  * as one designed system rather than a stack of unrelated blocks.
  */
-export function SectionHeading({ label, title, subtitle, className = "" }: Props) {
+export function SectionHeading({
+  label,
+  title,
+  subtitle,
+  className = "",
+  center = false,
+}: Props) {
   return (
-    <Reveal className={className}>
+    <Reveal className={`${center ? "text-center" : ""} ${className}`}>
       <div className="eyebrow mb-5">
         <span className="opacity-50">//</span> {label} <span className="opacity-50">//</span>
       </div>
       <h2 className="display text-white text-3xl md:text-5xl mb-5">{title}</h2>
       {subtitle && (
-        <p className="text-[var(--grey-text)] max-w-xl leading-relaxed">{subtitle}</p>
+        <p
+          className={`text-[var(--grey-text)] max-w-xl leading-relaxed ${
+            center ? "mx-auto" : ""
+          }`}
+        >
+          {subtitle}
+        </p>
       )}
     </Reveal>
   );

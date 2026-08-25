@@ -58,6 +58,12 @@ h3 {
   outline-offset: 2px;
 }
 
+/* Ask Preflight composer: the pill wrapper shows focus (border turns
+   purple), so the input's own ring would just double it up. */
+.composer-input:focus-visible {
+  outline: none;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
