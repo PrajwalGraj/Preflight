@@ -61,7 +61,12 @@ export function Hero() {
 
   return (
     <section className="relative bg-black pt-16 rule-b overflow-hidden">
-        <div className="max-w-7xl mx-auto rule-x grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr]">
+        {/* Ambient gradient glow, anchored behind the graphic */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute top-1/2 right-[6%] -translate-y-1/2 h-[560px] w-[620px] rounded-full bg-[radial-gradient(closest-side,rgba(143,113,211,0.30),rgba(250,216,72,0.08)_55%,transparent_75%)] blur-3xl" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto rule-x grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr]">
           {/* Copy */}
           <motion.div
             className="px-8 md:px-14 py-20 md:py-28"
@@ -71,10 +76,10 @@ export function Hero() {
           >
             <motion.div
               variants={reduced ? undefined : child}
-              className="flex items-center gap-2.5 text-sm text-[var(--grey-text)] mb-10"
+              className="inline-flex items-center gap-2.5 text-sm text-[var(--grey-text)] mb-10 rounded-full border border-white/10 bg-white/5 px-4 py-1.5"
             >
               <motion.span
-                className="w-1.5 h-1.5 bg-[var(--status-green)]"
+                className="w-1.5 h-1.5 rounded-full bg-[var(--status-green)]"
                 animate={reduced ? undefined : { opacity: [1, 0.3, 1] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               />
@@ -87,7 +92,7 @@ export function Hero() {
               </motion.span>
               <motion.span
                 variants={reduced ? undefined : child}
-                className="block text-[var(--yellow)]"
+                className="block text-[var(--yellow)] drop-shadow-[0_0_32px_rgba(250,216,72,0.35)]"
               >
                 you send.
               </motion.span>
@@ -103,17 +108,17 @@ export function Hero() {
 
             <motion.div
               variants={reduced ? undefined : child}
-              className="flex flex-col sm:flex-row items-stretch sm:items-start w-fit"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-fit"
             >
               <a
                 href="#signal"
-                className="px-7 py-3.5 font-semibold text-sm bg-[var(--yellow)] text-black hover:brightness-110 transition-all duration-200"
+                className="px-7 py-3.5 rounded-full font-semibold text-sm text-center bg-gradient-to-br from-[#fff1a8] via-[var(--yellow)] to-[#e0b62f] text-black shadow-[0_0_28px_-6px_rgba(250,216,72,0.55)] hover:brightness-110 transition-all duration-200"
               >
                 View live network
               </a>
               <Link
                 to="/docs"
-                className="px-7 py-3.5 font-semibold text-sm text-center text-white border border-[var(--rule)] border-t-0 sm:border-t sm:border-l-0 hover:bg-white/5 transition-colors duration-200"
+                className="px-7 py-3.5 rounded-full font-semibold text-sm text-center text-white border border-white/15 hover:bg-white/5 hover:border-white/30 transition-colors duration-200"
               >
                 Read the docs
               </Link>
@@ -122,24 +127,32 @@ export function Hero() {
 
           {/* Graphic */}
           <motion.div
-            className="relative border-t lg:border-t-0 lg:border-l border-[var(--rule)] min-h-[340px] lg:min-h-0 flex items-center justify-center p-10"
+            className="relative min-h-[340px] lg:min-h-0 flex items-center justify-center p-10 lg:p-14"
             initial={reduced ? undefined : { opacity: 0 }}
             animate={reduced ? undefined : { opacity: 1 }}
             transition={{ duration: 1, ease: EASE_OUT, delay: 0.2 }}
           >
-            <div className="w-full max-w-lg aspect-square">
-              <HexField />
-            </div>
+            <div className="relative w-full max-w-lg aspect-square rounded-[2.5rem] border border-white/10 bg-gradient-to-b from-white/5 to-transparent shadow-[0_0_90px_-20px_rgba(143,113,211,0.5)] flex items-center justify-center overflow-hidden">
+              {/* Hairline sheen along the top edge */}
+              <div
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"
+              />
 
-            {/* Corner ticks */}
-            {[
-              "top-4 left-4",
-              "top-4 right-4",
-              "bottom-4 left-4",
-              "bottom-4 right-4",
-            ].map((pos) => (
-              <span key={pos} aria-hidden className={`absolute w-1.5 h-1.5 bg-white/30 ${pos}`} />
-            ))}
+              <div className="w-4/5 aspect-square">
+                <HexField />
+              </div>
+
+              {/* Corner ticks */}
+              {[
+                "top-6 left-6",
+                "top-6 right-6",
+                "bottom-6 left-6",
+                "bottom-6 right-6",
+              ].map((pos) => (
+                <span key={pos} aria-hidden className={`absolute w-1.5 h-1.5 bg-white/30 ${pos}`} />
+              ))}
+            </div>
           </motion.div>
         </div>
     </section>
